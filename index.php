@@ -75,7 +75,7 @@ $paging_url = "index.php?orderField=$orderField";
 <div class="navigation"><?php require_once "include/navigation.php" ?></div>
 <div class="content"><!-- content -->
 
-<h2>Store Items</h2>
+<h2>Store Items: </h2> showing the first <?php echo count($items) ?>
 
 
 <div id="nav_bar">

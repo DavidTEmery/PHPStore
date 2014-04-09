@@ -59,11 +59,11 @@ DB::init();
                 <div class="block item-features">
 
                     <form action="addItem.php" method="post">
-                        <table>
-                            <tr> <th>name:</th> <td><input type="text" name="name" value="a"/></td> </tr>
-                            <tr> <th>category:</th> <td><input type="text" name="category" value="a"/></td> </tr>
-                            <tr> <th>price:</th> <td>$<input type="text" name="price" value=1 /></td> </tr>
-                            <tr> <td>$<input type="submit" /></td> </tr>
+                        <table> <!-- http://stackoverflow.com/questions/22971373/disable-submit-button-until-fields-have-text -->
+                            <tr> <th>Name:</th> <td><input type="text" name="name" required /></td> </tr>
+                            <tr> <th>Category:</th> <td><input type="text" name="category" /></td> </tr>
+                            <tr> <th>Price:</th> <td>$<input type="text" name="price" size="6" value=0.00 /></td> </tr>
+                            <tr> <td>$<input type="submit" <?php //$disabled ?> /></td> </tr>
                         </table>
                     </form>
 

@@ -7,10 +7,18 @@ DB::init();
 
 $keywords = array("%".$params->keywords."%");
 
-
+$sortDirection = "asc";
+//$sortDirection = $params->sortDirection;
+//if ($sortDirection == "asc") {
+//    $sortDirection = "desc";
+//} elseif ($sortDirection == "desc") {
+//    $sortDirection = "asc";
+//} else {
+//    $sortDirection = "asc";
+//}
 
 if(isset($params->orderField)) {
-    $items = R::find('item', " name like ? order by $params->orderField", $keywords);
+    $items = R::find('item', " name like ? order by $params->orderField $sortDirection", $keywords);
 } else {
     $items = R::find('item', ' name like ? ', $keywords);
 }
@@ -36,7 +44,7 @@ if(isset($params->orderField)) {
 <div class="content"><!-- content -->
 
 <h2>Search Results</h2>
-<h3> Your search for "<?php echo $params->keywords ?>" yielded  results: </h3>
+<h3> Your search for "<?php echo $params->keywords ?>" yielded <?php echo count($items) ?> results: </h3>
 
 <!-- Main Display Table -->
 <table>
