@@ -7,7 +7,13 @@ DB::init();
 
 $keywords = array("%".$params->keywords."%");
 
-$items = R::find('item', ' name like ? ', $keywords );
+
+
+if(isset($params->orderField)) {
+    $items = R::find('item', " name like ? order by $params->orderField", $keywords);
+} else {
+    $items = R::find('item', ' name like ? ', $keywords);
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
@@ -32,12 +38,13 @@ $items = R::find('item', ' name like ? ', $keywords );
 <h2>Search Results</h2>
 <h3> Your search for "<?php echo $params->keywords ?>" yielded  results: </h3>
 
+<!-- Main Display Table -->
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Category</th>
-    <th>Price</th>
-    <th>For Sale:</th>
+  <tr> <!-- All of these links resend the keywords parameter. -->
+    <th><a href="search.php?orderField=name&keywords=<?php echo $params->keywords ?>"?>Name</a></th>
+    <th><a href="search.php?orderField=category&keywords=<?php echo $params->keywords ?>"?>Category</a></th>
+    <th><a href="search.php?orderField=price&keywords=<?php echo $params->keywords ?>"?>Price</a></th>
+    <th><a href="search.php?orderField=for_sale&keywords=<?php echo $params->keywords ?>"?>For Sale:</a></th>
   </tr>
   <?php foreach ($items as $item): ?>
     <tr>

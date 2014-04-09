@@ -13,6 +13,10 @@ if(isset($params->name)) {
     $item->name = $params->name;
     R::store($item);
 }
+if(isset($params->price)) {
+    $item->price = $params->price;
+    R::store($item);
+}
 if(isset($params->for_sale)) {
     $item->for_sale = $params->for_sale;
     R::store($item);
@@ -87,7 +91,7 @@ else
       <tr> <th>id:</th> <td><?php echo $item->id ?></td> </tr>
       <tr> <th>name:</th> <td><?php echo htmlspecialchars($item->name) ?></td> </tr>
       <tr> <th>category:</th> <td><?php echo $item->category ?></td> </tr>
-      <tr> <th>price:</th> <td>$<?php echo $item->price ?></td> </tr>
+      <tr> <th>price:</th> <td>$<?php echo number_format($item->price, 2) ?></td> </tr>
       <tr> <th>For Sale:</th> <td><?php
               if ($item->for_sale == 1) echo "Yes";
               else echo "No" ?></td> </tr>
@@ -104,6 +108,9 @@ else
             <input type="hidden" name="id" value="<?php echo $item->id ?>" />
             Name:
             <input type="text" name="name" value="<?php echo htmlspecialchars($item->name) ?>" />
+            <br />
+            Price: $
+            <input type="text" name="price" value="<?php echo number_format($item->price, 2) ?>" />
             <br />
             <?php if ($item->for_sale == 1):?>
                 <button type="submit" name="for_sale" value=0 >Take Off Market</button>

@@ -1,10 +1,7 @@
 <?php
 require_once "include/DB.php";
 DB::init();
-
-
 $params = (object) $_REQUEST;
-
 $orderField = "name";
 if (isset($params->orderField)) {
   $orderField = $params->orderField;
@@ -88,13 +85,13 @@ Pages:
 <?php endfor ?>
 </div>
 
-
+<!-- Main Display Table -->
 <table>
   <tr>
-    <th>Name</th>
-    <th>Category</th>
-    <th>Price</th>
-    <th>For Sale:</th>
+    <th><a href="index.php?orderField=name">Name</a></th>
+    <th><a href="index.php?orderField=category">Category</a></th>
+    <th><a href="index.php?orderField=price">Price</a></th>
+    <th><a href="index.php?orderField=for_sale"?>For Sale:</a></th>
   </tr>
   <?php foreach ($items as $item): ?>
     <tr>
