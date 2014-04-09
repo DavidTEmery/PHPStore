@@ -5,6 +5,10 @@ require_once "include/Session.php";
 $session = new Session();
 require_once "include/DB.php";
 DB::init();
+$params = (object) $_SESSION;
+
+$disabled = ""; // This variable will determine whether a cart item can be 
+                // modified based on whether the item is for sale.  
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -36,14 +40,21 @@ DB::init();
                     <table border="1" cellpadding="2">
                         <tr><th align="left">Name:</th><th>Price:</th><th>Quantity:</th></tr>
                         <?php foreach ($session->cart as $item_id => $quantity): ?>
-                            <?php $item = R::load("item", $item_id) ?>
-                            <tr><td><?php echo $item->name ?></td>
+                            <?php
+                                $item = R::load("item", $item_id);
+                                if ($item->for_sale == 0) {
+                                    $disabled = "disabled";
+                                } else {
+                                    $disabled = "";
+                                }
+                                ?>
+                        <tr><td><a href="showItem.php?item_id=<?php echo $item->id ?>"> <?php echo $item->name ?> </a></td>
                                 <td><?php echo $item->price ?></td>
                                 <td>
-                                    <form name="editQnty" method="post" action="editCart.php"> 
-                                        <input type="text" size="3" name="quantity" value="<?php echo $quantity ?>" />
+                                    <form name="editQnty" method="post" action="editCart.php" > 
+                                        <input type="text" size="3" name="quantity" value="<?php echo $quantity ?>" <?php echo $disabled ?> />
                                         <input type="hidden" name="id" value="<?php echo $item_id ?>" />
-                                        <input type="submit" value="Submit" />
+                                        <input type="submit" value="Submit" <?php echo $disabled ?> />
                                     </form>
                                 </td>
                                 <td color=red> <!-- Click to Remove from cart: -->
@@ -65,6 +76,13 @@ DB::init();
                             <input type="hidden" value=<?php $session->cart?> />
                         </form>
                     <?php endif ?>
+                    
+                    <!-- Clear Cart: -->
+                        <form action="clearCart.php" method="post">
+                            <input value="true" name="clearCart" type="hidden" />
+                            <input type="submit" value="Clear Cart" />
+                        </form>
+                    
                 <?php else: // if cart is unset:  ?>
                     Your Cart is Empty
                 <?php endif ?>
