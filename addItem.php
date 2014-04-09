@@ -9,7 +9,7 @@ $props = DB::init();
 $item = R::dispense('item');
 $item->name = $params->name;
 $item->category = $params->category;
-$item->price = $params->price;
+$item->price = number_format($params->price, 2);
 
 $id = R::store($item);
 

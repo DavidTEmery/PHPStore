@@ -8,7 +8,17 @@ DB::init();
 $params = (object) $_REQUEST;
 
 $item = R::load('item',$params->item_id);
+
+if(isset($params->name)) {
+    $item->name = $params->name;
+    R::store($item);
+}
+if(isset($params->for_sale)) {
+    $item->for_sale = $params->for_sale;
+    R::store($item);
+}
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -50,6 +60,12 @@ $item = R::load('item',$params->item_id);
     border: solid 2px  red;
     border-radius: 4px;
   }
+  .item-modify {
+      margin: 7px;
+      padding: 5px 10px;
+      border: solid 3px  green;
+      border-radius: 4px;
+  }
 </style>
 </head>
 
@@ -67,6 +83,7 @@ $item = R::load('item',$params->item_id);
   <tr> <th>name:</th> <td><?php echo htmlspecialchars($item->name) ?></td> </tr>
   <tr> <th>category:</th> <td><?php echo $item->category ?></td> </tr>
   <tr> <th>price:</th> <td>$<?php echo $item->price ?></td> </tr>
+  <tr> <th>For Sale:</th> <td><?php echo $item->for_sale ?></td> </tr>
 </table>
 </div>
 
@@ -81,6 +98,23 @@ $item = R::load('item',$params->item_id);
     <input type="submit" name="doit" value="Add To Cart"/>
   </form>
 </div>
+
+<div class="block item-modify">
+  <form action="" method="post">
+    <b>Modify - Admin Only</b>
+    <br />
+    <input type="hidden" name="id" value="<?php echo $item->id ?>" />
+    Name:
+    <input type="text" name="name" value="<?php echo htmlspecialchars($item->name) ?>" />
+    <br />
+    <?php if ($item->for_sale == 1): ?>
+    <button type="submit" name="for_sale" value=0 >Take Off Market</button>
+    <?php else: ?>
+    <button type="submit" name="for_sale" value=1 >Put On Market</button>
+    <?php endif ?>
+  </form>
+</div>
+
 
 <br />
 <div class="block item-descrip">

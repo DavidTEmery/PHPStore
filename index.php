@@ -89,12 +89,12 @@ Pages:
 </div>
 
 
-
 <table>
   <tr>
-    <th>name</th>
-    <th>category</th>
-    <th>price</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th>For Sale:</th>
   </tr>
   <?php foreach ($items as $item): ?>
     <tr>
@@ -103,6 +103,9 @@ Pages:
       </td>
       <td><?php echo $item->category ?></td>
       <td>$<?php echo number_format($item->price,2) ?></td>
+      <td><?php
+              if ($item->for_sale == 1) echo "Yes";
+              else echo "No"; ?></td>
     </tr>
   <?php endforeach ?>
 </table>

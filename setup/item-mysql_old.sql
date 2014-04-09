@@ -5,6 +5,5 @@ create table item (
   category varchar(255) not null,
   price real not null default 0,
   description text not null,
-  image varchar(255) not null default '',
-  for_sale tinyint not null default 1
+  image varchar(255) not null default ''
 );

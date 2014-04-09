@@ -12,5 +12,5 @@
 </Files>
 <Files createStore.php>
  order allow,deny
-  # allow from all
+ allow from all
 </Files>
