@@ -17,6 +17,11 @@ if(isset($params->for_sale)) {
     $item->for_sale = $params->for_sale;
     R::store($item);
 }
+
+if ($item->for_sale == 1)
+    $disabled = ""; //Not Disabled
+else
+    $disabled = "disabled";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
@@ -78,14 +83,36 @@ if(isset($params->for_sale)) {
 <h2>Item Features</h2>
 
 <div class="block item-features">
-<table>
-  <tr> <th>id:</th> <td><?php echo $item->id ?></td> </tr>
-  <tr> <th>name:</th> <td><?php echo htmlspecialchars($item->name) ?></td> </tr>
-  <tr> <th>category:</th> <td><?php echo $item->category ?></td> </tr>
-  <tr> <th>price:</th> <td>$<?php echo $item->price ?></td> </tr>
-  <tr> <th>For Sale:</th> <td><?php echo $item->for_sale ?></td> </tr>
-</table>
+    <table>
+      <tr> <th>id:</th> <td><?php echo $item->id ?></td> </tr>
+      <tr> <th>name:</th> <td><?php echo htmlspecialchars($item->name) ?></td> </tr>
+      <tr> <th>category:</th> <td><?php echo $item->category ?></td> </tr>
+      <tr> <th>price:</th> <td>$<?php echo $item->price ?></td> </tr>
+      <tr> <th>For Sale:</th> <td><?php
+              if ($item->for_sale == 1) echo "Yes";
+              else echo "No" ?></td> </tr>
+    </table>
 </div>
+
+
+
+<?php if (isset($session->user) && $session->user->level == 1): ?>
+    <div class="block item-modify">
+        <form action="" method="post">
+            <b>Modify - Admin Only</b>
+            <br />
+            <input type="hidden" name="id" value="<?php echo $item->id ?>" />
+            Name:
+            <input type="text" name="name" value="<?php echo htmlspecialchars($item->name) ?>" />
+            <br />
+            <?php if ($item->for_sale == 1):?>
+                <button type="submit" name="for_sale" value=0 >Take Off Market</button>
+            <?php else: ?>
+                <button type="submit" name="for_sale" value=1 >Put On Market</button>
+            <?php endif ?>
+        </form>
+    </div>
+<?php endif ?>
 
 <div class="block item-cart">
   <form action="addToCart.php" method="post">
@@ -95,23 +122,7 @@ if(isset($params->for_sale)) {
     quantity:
     <input type="text" size="5" name="quantity" value="1" />
     <br />
-    <input type="submit" name="doit" value="Add To Cart"/>
-  </form>
-</div>
-
-<div class="block item-modify">
-  <form action="" method="post">
-    <b>Modify - Admin Only</b>
-    <br />
-    <input type="hidden" name="id" value="<?php echo $item->id ?>" />
-    Name:
-    <input type="text" name="name" value="<?php echo htmlspecialchars($item->name) ?>" />
-    <br />
-    <?php if ($item->for_sale == 1): ?>
-    <button type="submit" name="for_sale" value=0 >Take Off Market</button>
-    <?php else: ?>
-    <button type="submit" name="for_sale" value=1 >Put On Market</button>
-    <?php endif ?>
+    <input <?php echo $disabled ?> type="submit" name="doit" value="Add To Cart"/>
   </form>
 </div>
 

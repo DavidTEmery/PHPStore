@@ -19,3 +19,10 @@ $session = new Session();
     <?php endif ?>
 </li>
 <li><a href="help.php">Help</a></li>
+
+<li>
+<form method="post" action="search.php">
+    <li><input name="keywords" type="text"></li>
+    <li><button name="search" action="submit">Search</button></li>
+</form>
+</li>
