@@ -26,7 +26,7 @@ $offset = ($page-1) * $items_per_page;
 $items = R::findAll('item',
    "1 order by $orderField asc limit $offset,$items_per_page");
 
-$num_pages = ceil( R::count('book')/$items_per_page );
+$num_pages = ceil( R::count('item')/$items_per_page );
 
 // we want to add the page parameter but maintain the ordering
 //$paging_url = "{$_SERVER['PHP_SELF']}?orderField=$orderField";
