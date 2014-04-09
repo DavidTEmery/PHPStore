@@ -16,6 +16,9 @@ if (!isset($user)) {
 }
 elseif (sha1($params->password) === $user->password) {  // correct
   $session->user = (object) $user->getProperties();
+  
+  //$session->user->level = $user->level;
+  
   unset($session->user->email);    // don't carry these
   unset($session->user->password); // fields in session
   header( "location: ." );
