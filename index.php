@@ -7,7 +7,6 @@ if (isset($params->orderField)) {
   $orderField = $params->orderField;
 }
 
-
 //$items = R::findAll('item',"1 order by name asc");
 
 // pagination: 

@@ -21,6 +21,11 @@ if(isset($params->for_sale)) {
     $item->for_sale = $params->for_sale;
     R::store($item);
 }
+// Delete an item upon request: 
+if(isset($params->delete)) {
+    R::trash($item);
+    header("location: index.php");
+}
 
 if ($item->for_sale == 1)
     $disabled = ""; //Not Disabled
@@ -102,8 +107,13 @@ else
 
 <?php if (isset($session->user) && $session->user->level == 1): ?>
     <div class="block item-modify">
+        <b>Modify - Admin Only</b>
+        
+        <form method="post" action="">
+            <input type="submit" name="delete" value="delete"/>
+        </form>
+        
         <form action="" method="post">
-            <b>Modify - Admin Only</b>
             <br />
             <input type="hidden" name="id" value="<?php echo $item->id ?>" />
             Name:
