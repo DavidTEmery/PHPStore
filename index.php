@@ -14,8 +14,11 @@ if (isset($params->orderField)) {
 $items_per_page = 10;
 
 $page = 1;
+$nextPage = 2;
 if (isset($params->page)) {
   $page = $params->page;
+  $nextPage = $page + 1;
+  $prevPage = $page - 1;
 }
 $offset = ($page-1) * $items_per_page;
 
@@ -59,7 +62,7 @@ $paging_url = "index.php?orderField=$orderField";
     padding: 0 5px;
     outline: none;
   }
-  #nav_bar a:nth-child(<?php echo $page ?>) {
+  #nav_bar a:nth-child(<?php if ($page == 1) echo $page; else echo $page+1 ?>) {
     color: magenta;
   }
 </style>
@@ -74,14 +77,30 @@ $paging_url = "index.php?orderField=$orderField";
 <div class="navigation"><?php require_once "include/navigation.php" ?></div>
 <div class="content"><!-- content -->
 
-<h2>Store Items: </h2> showing the first <?php echo count($items) ?>
+<h2>Store Items: </h2> showing  
+    <?php 
+    if($page==1)
+        echo " the first ";
+    elseif($page==$num_pages)
+        echo " the last ";
+    echo count($items) ?> items
 
 
 <div id="nav_bar">
 Pages:
-<?php for( $num = 1; $num <= $num_pages; ++$num ): ?>
-  <a href="<?php echo "$paging_url&page=$num"?>"><?php echo $num?></a>
+<?php if ($page > 1): ?>
+    <a href="<?php echo "$paging_url&page=$prevPage" ?>"> <b> < </b> </a>
+<?php endif ?>
+
+<?php for ($num = 1; $num <= $num_pages; ++$num): ?>
+    <a href="<?php echo "$paging_url&page=$num" ?>"><?php echo $num ?></a>
 <?php endfor ?>
+
+<?php if ($page < $num_pages): ?>
+    <a href="<?php echo "$paging_url&page=$nextPage" ?>"> <b> > </b> </a>
+<?php endif ?>
+
+  
 </div>
 
 <!-- Main Display Table -->
