@@ -18,6 +18,7 @@ $item->name = $params->name;
 $item->category = $params->category;
 $item->price = number_format($params->price, 2);
 
+// http://www.sitepoint.com/file-uploads-with-php/ 
 define("IMAGE_DIR", "C:\wamp\www\CSC417_2014_wiOznur\PhpStore\images\items\\");
 //if(isset($params->imageFile)) {
     if (!empty($_FILES["imageFile"])) {

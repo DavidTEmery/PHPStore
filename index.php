@@ -44,7 +44,6 @@ $paging_url = "index.php?orderField=$orderField";
 <link rel="stylesheet" type="text/css" href="css/layout.css" />
 <link rel="stylesheet" type="text/css" href="css/table-display.css" />
 
-
 <style type="text/css">
   #nav_bar {
     background: #000;
@@ -68,14 +67,13 @@ $paging_url = "index.php?orderField=$orderField";
 </style>
 
 
-
 </head>
 
 <body>
 <div class="container">
 <div class="header"><?php require_once "include/header.php" ?></div>
 <div class="navigation"><?php require_once "include/navigation.php" ?></div>
-<div class="content"><!-- content -->
+<div class="content" align="center"><!-- content -->
 
 <h2>Store Items: </h2> showing  
     <?php 
@@ -87,45 +85,63 @@ $paging_url = "index.php?orderField=$orderField";
 
 
 <div id="nav_bar">
-Pages:
-<?php if ($page > 1): ?>
-    <a href="<?php echo "$paging_url&page=$prevPage" ?>"> <b> < </b> </a>
-<?php else: echo "<"; 
-    endif?>
-    
-<?php for ($num = 1; $num <= $num_pages; ++$num): ?>
-    <a href="<?php echo "$paging_url&page=$num" ?>"><?php echo $num ?></a>
-<?php endfor ?>
+    Pages:
+    <?php if ($page > 1): ?>
+        <a href="<?php echo "$paging_url&page=$prevPage" ?>"> <b> < </b> </a>
+    <?php else: echo "<"; 
+        endif?>
 
-<?php if ($page < $num_pages): ?>
-    <a href="<?php echo "$paging_url&page=$nextPage" ?>"> <b> > </b> </a>
-<?php endif ?>
+    <?php for ($num = 1; $num <= $num_pages; ++$num): ?>
+        <a href="<?php echo "$paging_url&page=$num" ?>"><?php echo $num ?></a>
+    <?php endfor ?>
 
-  
+    <?php if ($page < $num_pages): ?>
+        <a href="<?php echo "$paging_url&page=$nextPage" ?>"> <b> > </b> </a>
+    <?php endif ?>
 </div>
 
 <!-- Main Display Table -->
-<table>
-  <tr>
+<table border="-10">
+<!--  <tr>
     <th><a href="index.php?orderField=name">Name</a></th>
     <th><a href="index.php?orderField=category">Category</a></th>
     <th><a href="index.php?orderField=price">Price</a></th>
     <th><a href="index.php?orderField=for_sale"?>For Sale:</a></th>
-  </tr>
+  </tr>-->
   <?php foreach ($items as $item): ?>
     <tr>
+        <td>
+            <a href="showItem.php?item_id=<?php echo $item->id ?>">
+                <img src="images/items/<?php echo $item->image ?>" height="25" />
+            </a>
+        </td>
       <td><a href="showItem.php?item_id=<?php echo $item->id ?>">
         <?php echo htmlspecialchars($item->name) ?></a>
+          <br/>
+        <?php echo $item->category." - "; if ($item->for_sale == 1) echo "For Sale";
+              else echo "Not For Sale"; ?>
       </td>
-      <td><?php echo $item->category ?></td>
       <td>$<?php echo number_format($item->price,2) ?></td>
-      <td><?php
-              if ($item->for_sale == 1) echo "Yes";
-              else echo "No"; ?></td>
+      
     </tr>
   <?php endforeach ?>
 </table>
 
+<div id="nav_bar">
+    Pages:
+    <?php if ($page > 1): ?>
+        <a href="<?php echo "$paging_url&page=$prevPage" ?>"> <b> < </b> </a>
+    <?php else: echo "<"; 
+        endif?>
+
+    <?php for ($num = 1; $num <= $num_pages; ++$num): ?>
+        <a href="<?php echo "$paging_url&page=$num" ?>"><?php echo $num ?></a>
+    <?php endfor ?>
+
+    <?php if ($page < $num_pages): ?>
+        <a href="<?php echo "$paging_url&page=$nextPage" ?>"> <b> > </b> </a>
+    <?php endif ?>
+</div>
 
 </div><!-- content -->
 </div><!-- container -->

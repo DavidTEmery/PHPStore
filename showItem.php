@@ -89,6 +89,8 @@ else
 <div class="navigation"><?php require_once "include/navigation.php" ?></div>
 <div class="content"><!-- content -->
 
+<button onclick="history.go(-1);">Back </button>
+    
 <h2>Item Features</h2>
 
 <div class="block item-features">
@@ -113,7 +115,7 @@ else
             <input type="submit" name="delete" value="delete"/>
         </form>
         
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data" >
             <br />
             <input type="hidden" name="id" value="<?php echo $item->id ?>" />
             Name:
@@ -122,11 +124,16 @@ else
             Price: $
             <input type="text" name="price" value="<?php echo number_format($item->price, 2) ?>" />
             <br />
+            Image:
+            <input type="file" name="imageFile" />
+            <br />
             <?php if ($item->for_sale == 1):?>
                 <button type="submit" name="for_sale" value=0 >Take Off Market</button>
             <?php else: ?>
                 <button type="submit" name="for_sale" value=1 >Put On Market</button>
             <?php endif ?>
+            <br />    
+            <button type="submit">Update</button>
         </form>
     </div>
 <?php endif ?>
