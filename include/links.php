@@ -12,6 +12,12 @@ $session = new Session();
 <?php endif ?>
 
 <li>
+    <?php if (isset($session->user)): ?>
+        <a href ="myOrders.php">My Orders</a>
+    <?php endif ?>
+</li>
+
+<li>
     <?php if (!isset($session->user)): ?>
         <a href="login.php">Login</a>
     <?php else: ?>
@@ -21,8 +27,8 @@ $session = new Session();
 <li><a href="help.php">Help</a></li>
 
 <li>
-<form method="post" action="search.php">
-    <li><input name="keywords" type="text"></li>
-    <li><button name="search" action="submit" >Search</button></li>
-</form>
+    <form method="post" action="search.php">
+        <li><input name="keywords" type="text"></li>
+        <li><button name="search" action="submit" >Search</button></li>
+    </form>
 </li>
