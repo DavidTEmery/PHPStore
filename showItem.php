@@ -146,7 +146,7 @@ else
 
 <br />
 <div class="block item-descrip">
-  <header>description:</header>
+  <header>description: </header>
   <?php if (empty($item->description)): ?>
   <strong>Not Available</strong>
   <?php else: ?>

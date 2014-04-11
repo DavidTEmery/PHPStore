@@ -3,6 +3,9 @@ require_once "include/Session.php";
 $session = new Session();
 require_once "include/DB.php";
 DB::init();
+
+$params = (object) $_REQUEST;
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -58,15 +61,17 @@ DB::init();
 
                 <div class="block item-features">
 
-                    <form action="addItem.php" method="post">
+                    <form action="addItem.php" method="post" enctype="multipart/form-data">
                         <table> <!-- http://stackoverflow.com/questions/22971373/disable-submit-button-until-fields-have-text -->
                             <tr> <th>Name:</th> <td><input type="text" name="name" required /></td> </tr>
                             <tr> <th>Category:</th> <td><input type="text" name="category" /></td> </tr>
                             <tr> <th>Price:</th> <td>$<input type="text" name="price" size="6" value=0.00 /></td> </tr>
+                            <tr> <th>Image:</th> <td><input type="file" name="imageFile" /></td> </tr>
                             <tr> <td>$<input type="submit" <?php //$disabled ?> /></td> </tr>
                         </table>
                     </form>
-
+                    
+                    <?php if(isset($params->error)) echo "Error Uploading Image" ?>
 
                 </div>
                 <br />

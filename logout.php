@@ -5,4 +5,4 @@ unset($session->user);
 
 unset($session->cart);
 
-header( "location: ." );
+header( "location: login.php" );

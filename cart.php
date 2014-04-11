@@ -49,7 +49,7 @@ $disabled = ""; // This variable will determine whether a cart item can be
                                 }
                                 ?>
                         <tr><td><a href="showItem.php?item_id=<?php echo $item->id ?>"> <?php echo $item->name ?> </a></td>
-                                <td><?php echo $item->price ?></td>
+                                <td><?php echo "$".number_format($item->price, 2) ?></td>
                                 <td>
                                     <form name="editQnty" method="post" action="editCart.php" > 
                                         <input type="text" size="3" name="quantity" value="<?php echo $quantity ?>" <?php echo $disabled ?> />

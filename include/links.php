@@ -23,6 +23,6 @@ $session = new Session();
 <li>
 <form method="post" action="search.php">
     <li><input name="keywords" type="text"></li>
-    <li><button name="search" action="submit">Search</button></li>
+    <li><button name="search" action="submit" >Search</button></li>
 </form>
 </li>

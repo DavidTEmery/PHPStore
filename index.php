@@ -90,8 +90,9 @@ $paging_url = "index.php?orderField=$orderField";
 Pages:
 <?php if ($page > 1): ?>
     <a href="<?php echo "$paging_url&page=$prevPage" ?>"> <b> < </b> </a>
-<?php endif ?>
-
+<?php else: echo "<"; 
+    endif?>
+    
 <?php for ($num = 1; $num <= $num_pages; ++$num): ?>
     <a href="<?php echo "$paging_url&page=$num" ?>"><?php echo $num ?></a>
 <?php endfor ?>
