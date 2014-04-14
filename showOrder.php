@@ -1,12 +1,16 @@
 <?php
-// My Orders
 require_once "include/Session.php";
-$session = new Session();
 require_once "include/DB.php";
-DB::init();
+$session = new Session();
 
-// fetch all orders for the logged in user:
-$myOrders = R::find('order', 'user_id=?', array($session->user->id));
+DB::init();
+R::setStrictTyping(false);
+
+$params = (object) $_REQUEST;
+
+$orderid = $params->orderid;
+
+$item_orders = R::find('item_order', 'order_id=?', array($orderid));
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
@@ -32,31 +36,25 @@ $myOrders = R::find('order', 'user_id=?', array($session->user->id));
             <div class="navigation"><?php require_once "include/navigation.php" ?></div>
             <div class="content"><!-- content -->
 
-                <h2>My Orders</h2>
-
-                <?php if ($myOrders): ?>
+                <h2>Order Details</h2>
+                
+                <button onclick="history.go(-1);"> Back </button>
+                
+                <?php if ($item_orders): ?>
                     <table border="1" cellpadding="2">
                         <!-- Ierate through the collection of orders -->
-                        <?php foreach ($myOrders as $order): ?>
-                            <tr><td><a href="showOrder.php?orderid=<?php echo $order->id ?>">
-                                        <?php echo $order->id ?> </a></td>
-                                <td><a href="showOrder.php?orderid=<?php echo $order->id ?>">
-                                    <?php echo date("M j, Y H:j:s" ,$order->created_at) ?></a></td>
-                                <td>Order Total:    </td>
-
-                                <?php if ($session->user->level == 1): ?>
-                                <td>
-                                <form action="fulfillOrder.php" method="post" >
-                                    <input type="submit" value="Fulfill Order" />
-                                    <input type="hidden" value=<?php echo $order->id ?> name='orderId' />
-                                </form>
-                                </td>
+                        <?php foreach ($item_orders as $item_order): ?>
+                        
+                            <?php $item = R::findOne('item', 'id=?', array($item_order->item_id)); ?>
+                            <tr><td><a href="showItem.php?item_id=<?php echo $item_order->item_id ?>">
+                                        <?php echo $item->name ?> </a></td>
+                                <td><?php echo $item_order->quantity?></td>
                             </tr>
-                            <?php endif ?>
+                            
                         <?php endforeach ?>
                     </table>
                 <?php else: // if cart is unset:   ?>
-                    You have no orders. 
+                    This order has no items. 
                 <?php endif ?>
             </div><!-- content -->
         </div><!-- container -->

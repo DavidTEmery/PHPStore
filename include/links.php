@@ -18,10 +18,16 @@ $session = new Session();
 </li>
 
 <li>
+    <?php if (isset($session->user) && $session->user->level==1): ?>
+        <a href ="allOrders.php">All Orders</a>
+    <?php endif ?>
+</li>
+
+<li>
     <?php if (!isset($session->user)): ?>
         <a href="login.php">Login</a>
     <?php else: ?>
-        <a href="logout.php">Logout</a>
+        <a href="logout.php">Logout <?php echo $session->user->name?></a>
     <?php endif ?>
 </li>
 <li><a href="help.php">Help</a></li>
